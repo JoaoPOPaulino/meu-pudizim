@@ -1,26 +1,70 @@
 ---
 import { site } from '../data/site.js'
+
+const anoAtual = new Date().getFullYear()
 ---
 
 <footer class="footer">
   <p class="footer__nome">{site.nome}</p>
   <p class="footer__sub">Feito com amor pela Karine 🍮</p>
-  <p class="footer__copy">© <span id="ano-atual"></span> — Todos os direitos reservados</p>
+
+  <a
+    href={site.instaPersoal}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="footer__instagram"
+  >
+    <span class="footer__instagram-icone">📸</span>
+    <span>@karineollins</span>
+  </a>
+
+  <p class="footer__copy">© {anoAtual} - Todos os direitos reservados</p>
 </footer>
 
 <style>
   .footer {
-    background: #0e0704;
-    color: rgba(255,255,255,0.4);
+    background: linear-gradient(180deg, #8f3535 0%, #722626 100%);
+    color: rgba(255, 244, 236, 0.78);
     text-align: center;
-    padding: 2.5rem 2rem;
+    padding: 2.8rem 2rem;
     font-size: 0.85rem;
     line-height: 2;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .footer__nome {
     font-family: 'Playfair Display', serif;
-    color: rgba(255,255,255,0.7);
-    font-size: 1rem;
+    color: #fff7f1;
+    font-size: 1.15rem;
+  }
+
+  .footer__sub {
+    color: rgba(255, 244, 236, 0.88);
+  }
+
+  .footer__instagram {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+    color: #fff7f1;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .footer__instagram:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 24px rgba(42, 10, 10, 0.18);
+  }
+
+  .footer__copy {
+    color: rgba(255, 244, 236, 0.62);
+    margin-top: 0.9rem;
   }
 </style>
+

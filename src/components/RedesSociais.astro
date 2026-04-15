@@ -1,0 +1,154 @@
+---
+import { site } from '../data/site.js'
+
+const redes = [
+  {
+    nome: 'Instagram',
+    arroba: '@meupudizim',
+    icone: '📸',
+    link: site.instagram,
+    texto: 'Acompanhe novidades, bastidores e nossos pudins saindo fresquinhos.'
+  },
+  {
+    nome: 'WhatsApp',
+    arroba: 'Fale conosco',
+    icone: '💬',
+    link: `https://wa.me/${site.whatsapp}?text=${encodeURIComponent('Olá! Vim pelo site e quero saber mais sobre os pedidos.')}`,
+    texto: 'Faça seu pedido, tire dúvidas e combine os detalhes diretamente com a Karine.'
+  }
+]
+---
+
+<section class="redes">
+  <div class="container">
+    <h2 class="section-title redes__titulo">Redes sociais</h2>
+    <p class="redes__intro">
+      Nos siga nas redes sociais para ficar por dentro das novidades e ofertas especiais!
+    </p>
+    <div class="section-divider"></div>
+
+    <div class="redes__lista">
+      {redes.map((rede) => (
+        <a href={rede.link} target="_blank" rel="noopener noreferrer" class="redes__card">
+          <div class="redes__icone">{rede.icone}</div>
+          <span class="redes__nome">{rede.nome}</span>
+          <strong class="redes__arroba">{rede.arroba}</strong>
+          <p class="redes__texto">{rede.texto}</p>
+          <span class="redes__cta">
+            Acessar <span class="redes__seta">→</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .redes {
+    background: #fffaf5;
+  }
+
+  .redes__titulo {
+    color: var(--bordo);
+  }
+
+  .redes__intro {
+    max-width: 620px;
+    margin: 0 auto 1rem;
+    text-align: center;
+    color: rgba(90, 52, 32, 0.78);
+    line-height: 1.7;
+  }
+
+  .redes__lista {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .redes__card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 100%;
+    background: #ffffff;
+    border: 1px solid rgba(163, 58, 58, 0.1);
+    border-radius: 1.4rem;
+    padding: 2rem;
+    color: var(--texto);
+    box-shadow: 0 14px 34px rgba(90, 52, 32, 0.08);
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  }
+
+  .redes__card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(90, 52, 32, 0.12);
+    border-color: rgba(163, 58, 58, 0.24);
+  }
+
+  .redes__icone {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--caramelo-claro) 0%, #f4d2ac 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 10px 22px rgba(201, 125, 58, 0.18);
+  }
+
+  .redes__nome {
+    display: inline-block;
+    color: var(--bordo);
+    font-size: 0.95rem;
+    font-weight: 800;
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .redes__arroba {
+    display: block;
+    color: var(--escuro);
+    font-size: 1.25rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .redes__texto {
+    line-height: 1.7;
+    font-size: 1rem;
+    color: var(--texto);
+    margin-bottom: 1.25rem;
+  }
+
+  .redes__cta {
+    margin-top: auto;
+    color: var(--caramelo);
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .redes__seta {
+    transition: transform 0.2s ease;
+  }
+
+  .redes__card:hover .redes__seta {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 720px) {
+    .redes__lista {
+      grid-template-columns: 1fr;
+    }
+
+    .redes__card {
+      padding: 1.7rem;
+    }
+  }
+</style>

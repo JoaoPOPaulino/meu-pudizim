@@ -1,28 +1,48 @@
 ---
-import { cardapio } from '../data/site.js'
+import { cardapio, site } from '../data/site.js'
 ---
 
 <section class="cardapio" id="cardapio">
   <div class="container">
     <h2 class="section-title">Cardápio</h2>
     <div class="section-divider"></div>
+
     <div class="cardapio__grid">
-      {cardapio.map(item => (
-        <div class="cardapio__card">
-          {item.destaque && <span class="cardapio__badge">⭐ Mais pedido</span>}
-          <div class="cardapio__icon">🍮</div>
-          <h3 class="cardapio__nome">{item.nome}</h3>
-          <p class="cardapio__descricao">{item.descricao}</p>
-          <strong class="cardapio__preco">R$ {item.preco} <small>/ unidade</small></strong>
-        </div>
-      ))}
+      {cardapio.map(item => {
+        const mensagem = `Olá! Estou interessado nesse pedido: ${item.nome}. Pode me passar mais informações?`
+        const linkPedido = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(mensagem)}`
+
+        return (
+          <div class="cardapio__card">
+            {item.destaque && <span class="cardapio__badge">Mais pedido</span>}
+            <div class="cardapio__icon">🍮</div>
+            <h3 class="cardapio__nome">{item.nome}</h3>
+            <p class="cardapio__descricao">{item.descricao}</p>
+            <strong class="cardapio__preco">R$ {item.preco} <small>/ unidade</small></strong>
+
+            <a
+              href={linkPedido}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="cardapio__botao"
+            >
+              <span>Peça agora</span>
+              <span class="cardapio__botao-icone">→</span>
+            </a>
+          </div>
+        )
+      })}
     </div>
+
+    <p class="cardapio__frete">
+      Observação: o valor do frete é combinado à parte, de acordo com o local da entrega.
+    </p>
   </div>
 </section>
 
 <style>
   .cardapio {
-    background: var(--bege-escuro);
+    background: #f7ecdf;
   }
 
   .cardapio__grid {
@@ -40,12 +60,13 @@ import { cardapio } from '../data/site.js'
     width: 100%;
     text-align: center;
     position: relative;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.08);
-    transition: transform 0.3s;
+    box-shadow: 0 8px 40px rgba(90, 52, 32, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
   }
 
   .cardapio__card:hover {
     transform: translateY(-4px);
+    box-shadow: 0 14px 34px rgba(90, 52, 32, 0.12);
   }
 
   .cardapio__badge {
@@ -74,20 +95,69 @@ import { cardapio } from '../data/site.js'
   }
 
   .cardapio__descricao {
-    color: #888;
+    color: rgba(90, 52, 32, 0.72);
     line-height: 1.7;
     margin-bottom: 1.2rem;
     font-size: 0.95rem;
   }
 
   .cardapio__preco {
+    display: block;
     color: var(--caramelo);
     font-size: 1.4rem;
+    margin-bottom: 1.3rem;
   }
 
   .cardapio__preco small {
     font-size: 0.85rem;
     font-weight: 400;
-    color: #aaa;
+    color: rgba(90, 52, 32, 0.55);
+  }
+
+  .cardapio__botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.2rem;
+  background: linear-gradient(135deg, var(--bordo) 0%, #b44b4b 100%);
+  color: white;
+  padding: 0.95rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.96rem;
+  letter-spacing: 0.02em;
+  box-shadow: 0 12px 24px rgba(163, 58, 58, 0.22);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+}
+
+.cardapio__botao:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(163, 58, 58, 0.28);
+  filter: brightness(1.03);
+}
+
+.cardapio__botao-icone {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: transform 0.22s ease, background 0.22s ease;
+}
+
+.cardapio__botao:hover .cardapio__botao-icone {
+  transform: translateX(3px);
+  background: rgba(255, 255, 255, 0.26);
+}
+  .cardapio__frete {
+    margin-top: 2rem;
+    text-align: center;
+    color: rgba(90, 52, 32, 0.75);
+    font-size: 0.95rem;
+    line-height: 1.6;
   }
 </style>

@@ -6,13 +6,16 @@ const link = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.mens
 <header class="header">
   <div class="header__container">
     <a href="/" class="header__logo">
-        <img src="/assets/meupudizim.png" alt="Logo Meu Pudizim" class="logo-img" />
-        {site.nome}
+      <img src="/assets/meupudizim.png" alt="Logo Meu Pudizim" class="logo-img" />
+      <span class="header__logo-texto">{site.nome}</span>
     </a>
+
     <nav class="header__nav">
       <a href="#cardapio">Cardápio</a>
       <a href="#historia">Sobre</a>
-      <a href={link} target="_blank" class="header__cta">Fazer pedido</a>
+      <a href={link} target="_blank" rel="noopener noreferrer" class="header__cta">
+        Fazer pedido
+      </a>
     </nav>
   </div>
 </header>
@@ -24,9 +27,10 @@ const link = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.mens
     left: 0;
     right: 0;
     z-index: 100;
-    padding: 1rem 2rem;
-    background: rgba(90, 16, 16, 0.95);
+    padding: 0.85rem 1rem;
+    background: rgba(255, 250, 243, 0.96);
     backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(163, 58, 58, 0.12);
   }
 
   .header__container {
@@ -35,51 +39,101 @@ const link = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.mens
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
   }
 
   .header__logo {
-    color: white;
+    color: var(--bordo-escuro);
     font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
+    font-size: 1.15rem;
     font-weight: 700;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     text-decoration: none;
+    line-height: 1.05;
+    min-width: 0;
+  }
+
+  .header__logo-texto {
+    display: block;
   }
 
   .logo-img {
-    height: 35px;
+    height: 34px;
     width: auto;
     border-radius: 5px;
+    flex-shrink: 0;
   }
 
   .header__nav {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.25rem;
   }
 
   .header__nav a {
-    color: rgba(255,255,255,0.85);
+    color: rgba(90, 52, 32, 0.88);
     font-size: 0.95rem;
     font-weight: 600;
     transition: color 0.2s;
   }
 
   .header__nav a:hover {
-    color: var(--caramelo-claro);
+    color: var(--bordo);
   }
 
   .header__cta {
     background: var(--caramelo) !important;
     color: white !important;
-    padding: 0.5rem 1.4rem;
+    padding: 0.55rem 1.15rem;
     border-radius: 2rem;
+    white-space: nowrap;
     transition: background 0.2s !important;
   }
 
   .header__cta:hover {
     background: var(--caramelo-claro) !important;
+  }
+
+  @media (max-width: 640px) {
+    .header {
+      padding: 0.8rem 0.9rem;
+    }
+
+    .header__container {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.8rem;
+    }
+
+    .header__logo {
+      justify-content: center;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .logo-img {
+      height: 30px;
+    }
+
+    .header__nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem 0.75rem;
+      align-items: center;
+    }
+
+    .header__nav a {
+      text-align: center;
+      font-size: 0.92rem;
+    }
+
+    .header__cta {
+      grid-column: 1 / -1;
+      display: block;
+      width: 100%;
+      padding: 0.8rem 1rem;
+    }
   }
 </style>

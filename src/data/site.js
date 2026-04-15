@@ -3,6 +3,8 @@ export const site = {
   whatsapp: "5563984424096",
   cidade: "Canoas - RS",
   mensagem: "Olá! Vim pelo site e quero fazer um pedido.",
+  instagram: "https://www.instagram.com/meupudizim/",
+  instaPersoal:'https://www.instagram.com/karineollins/'
 }
 
 export const cardapio = [

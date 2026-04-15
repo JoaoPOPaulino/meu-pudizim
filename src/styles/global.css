@@ -1,17 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700&display=swap');
 
 :root {
-  --bordo: #7a1c1c;
-  --bordo-escuro: #5a1010;
-  --caramelo: #c97d3a;
-  --caramelo-claro: #e8a96a;
-  --bege: #fdf6ec;
-  --bege-escuro: #f0e4d0;
-  --escuro: #1e0f06;
-  --escuro-medio: #2e1a0a;
-  --texto: #3d2010;
+  --bordo: #a33a3a;
+  --bordo-escuro: #7f2626;
+  --caramelo: #d99a5b;
+  --caramelo-claro: #edbd88;
+  --bege: #fffaf3;
+  --bege-escuro: #f7ebdc;
+  --escuro: #4a2b1a;
+  --escuro-medio: #6a4330;
+  --texto: #5a3420;
   --branco: #ffffff;
 }
+
 
 *, *::before, *::after {
   margin: 0;
