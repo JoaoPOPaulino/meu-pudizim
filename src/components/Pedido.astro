@@ -1,0 +1,61 @@
+---
+import { site } from '../data/site.js'
+const link = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.mensagem)}`
+---
+
+<section class="pedido">
+  <div class="container pedido__container">
+    <h2 class="pedido__titulo">Faça seu pedido</h2>
+    <div class="section-divider"></div>
+    <p class="pedido__texto">É simples! Manda uma mensagem no WhatsApp e a gente cuida do resto com muito carinho 🍮</p>
+    <a href={link} target="_blank" class="pedido__btn">💬 Pedir no WhatsApp</a>
+    <p class="pedido__aviso">📍 Entregamos somente em {site.cidade} — consulte disponibilidade de horário</p>
+  </div>
+</section>
+
+<style>
+  .pedido {
+    background: var(--bordo);
+  }
+
+  .pedido__container {
+    text-align: center;
+  }
+
+  .pedido__titulo {
+    font-size: 2.2rem;
+    color: var(--branco);
+  }
+
+  .pedido__texto {
+    color: rgba(255,255,255,0.88);
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .pedido__btn {
+    display: inline-block;
+    background: #25D366;
+    color: white;
+    padding: 1rem 2.8rem;
+    border-radius: 3rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  .pedido__btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+
+  .pedido__aviso {
+    margin-top: 1.8rem;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.55);
+  }
+</style>

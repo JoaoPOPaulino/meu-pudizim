@@ -1,0 +1,93 @@
+---
+import { cardapio } from '../data/site.js'
+---
+
+<section class="cardapio" id="cardapio">
+  <div class="container">
+    <h2 class="section-title">Cardápio</h2>
+    <div class="section-divider"></div>
+    <div class="cardapio__grid">
+      {cardapio.map(item => (
+        <div class="cardapio__card">
+          {item.destaque && <span class="cardapio__badge">⭐ Mais pedido</span>}
+          <div class="cardapio__icon">🍮</div>
+          <h3 class="cardapio__nome">{item.nome}</h3>
+          <p class="cardapio__descricao">{item.descricao}</p>
+          <strong class="cardapio__preco">R$ {item.preco} <small>/ unidade</small></strong>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cardapio {
+    background: var(--bege-escuro);
+  }
+
+  .cardapio__grid {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .cardapio__card {
+    background: var(--branco);
+    border-radius: 1.5rem;
+    padding: 2.5rem 2rem;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+    transition: transform 0.3s;
+  }
+
+  .cardapio__card:hover {
+    transform: translateY(-4px);
+  }
+
+  .cardapio__badge {
+    position: absolute;
+    top: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--caramelo);
+    color: white;
+    padding: 0.35rem 1.2rem;
+    border-radius: 2rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .cardapio__icon {
+    font-size: 3.5rem;
+    margin: 0.5rem 0 1rem;
+  }
+
+  .cardapio__nome {
+    font-size: 1.5rem;
+    color: var(--bordo);
+    margin-bottom: 0.8rem;
+  }
+
+  .cardapio__descricao {
+    color: #888;
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .cardapio__preco {
+    color: var(--caramelo);
+    font-size: 1.4rem;
+  }
+
+  .cardapio__preco small {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #aaa;
+  }
+</style>

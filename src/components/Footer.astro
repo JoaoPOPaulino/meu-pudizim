@@ -1,0 +1,26 @@
+---
+import { site } from '../data/site.js'
+---
+
+<footer class="footer">
+  <p class="footer__nome">{site.nome}</p>
+  <p class="footer__sub">Feito com amor pela Karine 🍮</p>
+  <p class="footer__copy">© <span id="ano-atual"></span> — Todos os direitos reservados</p>
+</footer>
+
+<style>
+  .footer {
+    background: #0e0704;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 2.5rem 2rem;
+    font-size: 0.85rem;
+    line-height: 2;
+  }
+
+  .footer__nome {
+    font-family: 'Playfair Display', serif;
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+  }
+</style>

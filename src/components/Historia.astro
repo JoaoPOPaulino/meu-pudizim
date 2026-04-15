@@ -1,0 +1,73 @@
+---
+const itens = [
+  { emoji: "🥚", texto: "Ingredientes frescos" },
+  { emoji: "❤️", texto: "Feito com amor" },
+  { emoji: "🚗", texto: "Entrega na cidade" },
+]
+---
+
+<section class="historia" id="historia">
+  <div class="container">
+    <h2 class="section-title historia__titulo">Nossa história</h2>
+    <div class="section-divider"></div>
+    <div class="historia__card">
+      <p>O <strong>Meu Pudizim</strong> nasceu da paixão da Karine pela confeitaria caseira. Cada pudim é preparado com ingredientes selecionados e muito carinho, para levar um pedacinho de alegria à sua mesa.</p>
+      <div class="historia__itens">
+        {itens.map(item => (
+          <div class="historia__item">
+            <span class="historia__emoji">{item.emoji}</span>
+            <span>{item.texto}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .historia {
+    background: var(--escuro);
+  }
+
+  .historia__titulo {
+    color: var(--caramelo);
+  }
+
+  .historia__card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    color: var(--bege);
+    line-height: 1.9;
+    font-size: 1.05rem;
+  }
+
+  .historia__itens {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .historia__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .historia__emoji {
+    background: var(--bordo);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+</style>

@@ -1,0 +1,68 @@
+---
+import { site } from '../data/site.js'
+const link = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.mensagem)}`
+---
+
+<section class="hero">
+  <div class="hero__container container">
+    <p class="hero__tag">♥ ♥ ♥</p>
+    <h1 class="hero__titulo">O pudim que aquece<br/>o coração</h1>
+    <p class="hero__subtitulo">Feito com amor, entregue na sua porta em {site.cidade} ✨</p>
+    <a href={link} target="_blank" class="hero__btn">Fazer meu pedido</a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(150deg, var(--bordo-escuro) 0%, var(--bordo) 40%, var(--caramelo) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 80px;
+  }
+
+  .hero__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .hero__tag {
+    color: var(--caramelo-claro);
+    font-size: 1.2rem;
+    letter-spacing: 0.5rem;
+  }
+
+  .hero__titulo {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--branco);
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+
+  .hero__subtitulo {
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.85);
+    max-width: 480px;
+  }
+
+  .hero__btn {
+    background: var(--branco);
+    color: var(--bordo);
+    padding: 1rem 2.8rem;
+    border-radius: 3rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+    font-family: 'Nunito', sans-serif;
+    margin-top: 0.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  .hero__btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+</style>

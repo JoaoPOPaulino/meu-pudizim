@@ -1,0 +1,85 @@
+---
+import { site } from '../data/site.js'
+const link = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.mensagem)}`
+---
+
+<header class="header">
+  <div class="header__container">
+    <a href="/" class="header__logo">
+        <img src="/assets/meupudizim.png" alt="Logo Meu Pudizim" class="logo-img" />
+        {site.nome}
+    </a>
+    <nav class="header__nav">
+      <a href="#cardapio">Cardápio</a>
+      <a href="#historia">Sobre</a>
+      <a href={link} target="_blank" class="header__cta">Fazer pedido</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1rem 2rem;
+    background: rgba(90, 16, 16, 0.95);
+    backdrop-filter: blur(10px);
+  }
+
+  .header__container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header__logo {
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+
+  .logo-img {
+    height: 35px;
+    width: auto;
+    border-radius: 5px;
+  }
+
+  .header__nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .header__nav a {
+    color: rgba(255,255,255,0.85);
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+
+  .header__nav a:hover {
+    color: var(--caramelo-claro);
+  }
+
+  .header__cta {
+    background: var(--caramelo) !important;
+    color: white !important;
+    padding: 0.5rem 1.4rem;
+    border-radius: 2rem;
+    transition: background 0.2s !important;
+  }
+
+  .header__cta:hover {
+    background: var(--caramelo-claro) !important;
+  }
+</style>

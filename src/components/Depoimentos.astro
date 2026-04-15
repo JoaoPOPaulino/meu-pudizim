@@ -1,0 +1,63 @@
+---
+import { depoimentos } from '../data/site.js'
+---
+
+<section class="depoimentos">
+  <div class="container">
+    <h2 class="section-title depoimentos__titulo">O que dizem por aí</h2>
+    <div class="section-divider"></div>
+    <div class="depoimentos__lista">
+      {depoimentos.map(dep => (
+        <div class="depoimentos__card">
+          <span class="depoimentos__estrelas">★★★★★</span>
+          <p class="depoimentos__texto">"{dep.texto}"</p>
+          <cite class="depoimentos__autor">— {dep.autor}</cite>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .depoimentos {
+    background: var(--escuro-medio);
+  }
+
+  .depoimentos__titulo {
+    color: var(--caramelo);
+  }
+
+  .depoimentos__lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .depoimentos__card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 1rem;
+    padding: 1.8rem 2rem;
+    color: var(--bege);
+  }
+
+  .depoimentos__estrelas {
+    color: var(--caramelo);
+    font-size: 1.1rem;
+  }
+
+  .depoimentos__texto {
+    margin: 0.8rem 0;
+    font-style: italic;
+    line-height: 1.7;
+    font-size: 1rem;
+  }
+
+  .depoimentos__autor {
+    color: var(--caramelo-claro);
+    font-size: 0.9rem;
+    font-style: normal;
+  }
+</style>
