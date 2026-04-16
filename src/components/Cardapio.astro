@@ -1,5 +1,5 @@
 ---
-import { cardapio, site } from '../data/site.js'
+import { cardapio, sabores, site } from '../data/site.js'
 ---
 
 <section class="cardapio" id="cardapio">
@@ -8,30 +8,55 @@ import { cardapio, site } from '../data/site.js'
     <div class="section-divider"></div>
 
     <div class="cardapio__grid">
-      {cardapio.map(item => {
-        const mensagem = `Olá! Estou interessado nesse pedido: ${item.nome}. Pode me passar mais informações?`
-        const linkPedido = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(mensagem)}`
+      {cardapio.map((item, index) => (
+        <div class="cardapio__card">
+          {item.destaque && <span class="cardapio__badge">Mais pedido</span>}
+          <div class="cardapio__icon">🍮</div>
+          <h3 class="cardapio__nome">{item.nome}</h3>
+          <span class="cardapio__tamanho">{item.tamanho}</span>
+          <p class="cardapio__descricao">{item.descricao}</p>
 
-        return (
-          <div class="cardapio__card">
-            {item.destaque && <span class="cardapio__badge">Mais pedido</span>}
-            <div class="cardapio__icon">🍮</div>
-            <h3 class="cardapio__nome">{item.nome}</h3>
-            <p class="cardapio__descricao">{item.descricao}</p>
-            <strong class="cardapio__preco">R$ {item.preco} <small>/ unidade</small></strong>
-
-            <a
-              href={linkPedido}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="cardapio__botao"
-            >
-              <span>Peça agora</span>
-              <span class="cardapio__botao-icone">→</span>
-            </a>
+          <div class="cardapio__sabores">
+            <p class="cardapio__sabores-label">Escolha o sabor</p>
+            <div class="cardapio__select-wrapper" id={`wrapper-${index}`}>
+              <button class="cardapio__select-trigger" type="button" data-card={index}>
+                <span class="cardapio__select-dot"></span>
+                <span class="cardapio__select-text">{sabores[0]}</span>
+                <svg class="cardapio__select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </button>
+              <ul class="cardapio__select-dropdown" id={`dropdown-${index}`}>
+                {sabores.map((sabor, si) => (
+                  <li
+                    class={`cardapio__select-option${si === 0 ? ' selecionado' : ''}`}
+                    data-card={index}
+                    data-sabor={sabor}
+                  >
+                    <span class="cardapio__option-check">✓</span>
+                    {sabor}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        )
-      })}
+
+          <strong class="cardapio__preco">R$ {item.preco} <small>/ unidade</small></strong>
+
+          <a
+            href="#"
+            class="cardapio__botao"
+            id={`btn-${index}`}
+            data-nome={item.nome}
+            data-sabor-inicial={sabores[0]}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>Peça agora</span>
+            <span class="cardapio__botao-icone">→</span>
+          </a>
+        </div>
+      ))}
     </div>
 
     <p class="cardapio__frete">
@@ -39,6 +64,69 @@ import { cardapio, site } from '../data/site.js'
     </p>
   </div>
 </section>
+
+<script define:vars={{ whatsapp: site.whatsapp }}>
+  const saborSelecionado = {};
+
+  // Inicializa sabor padrão
+  document.querySelectorAll('.cardapio__botao').forEach(btn => {
+    const card = btn.id.replace('btn-', '');
+    saborSelecionado[card] = btn.dataset.saborInicial;
+    atualizarLink(card);
+  });
+
+  // Abre/fecha dropdown
+  document.querySelectorAll('.cardapio__select-trigger').forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = trigger.dataset.card;
+      const dropdown = document.getElementById(`dropdown-${card}`);
+      const wrapper = document.getElementById(`wrapper-${card}`);
+      const isOpen = wrapper.classList.contains('aberto');
+
+      // Fecha todos
+      document.querySelectorAll('.cardapio__select-wrapper').forEach(w => w.classList.remove('aberto'));
+
+      if (!isOpen) wrapper.classList.add('aberto');
+    });
+  });
+
+  // Fecha ao clicar fora
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.cardapio__select-wrapper').forEach(w => w.classList.remove('aberto'));
+  });
+
+  // Seleciona sabor
+  document.querySelectorAll('.cardapio__select-option').forEach(opt => {
+    opt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = opt.dataset.card;
+      const sabor = opt.dataset.sabor;
+
+      // Atualiza opções
+      document.querySelectorAll(`#dropdown-${card} .cardapio__select-option`).forEach(o => o.classList.remove('selecionado'));
+      opt.classList.add('selecionado');
+
+      // Atualiza trigger
+      const trigger = document.querySelector(`#wrapper-${card} .cardapio__select-text`);
+      trigger.textContent = sabor;
+
+      saborSelecionado[card] = sabor;
+      atualizarLink(card);
+
+      // Fecha dropdown
+      document.getElementById(`wrapper-${card}`).classList.remove('aberto');
+    });
+  });
+
+  function atualizarLink(card) {
+    const botao = document.getElementById(`btn-${card}`);
+    const nome = botao.dataset.nome;
+    const sabor = saborSelecionado[card];
+    const mensagem = `Olá! Gostaria de pedir: ${nome} - Sabor: ${sabor}. Pode me passar mais informações?`;
+    botao.href = `https://wa.me/${whatsapp}?text=${encodeURIComponent(mensagem)}`;
+  }
+</script>
 
 <style>
   .cardapio {
@@ -85,12 +173,23 @@ import { cardapio, site } from '../data/site.js'
 
   .cardapio__icon {
     font-size: 3.5rem;
-    margin: 0.5rem 0 1rem;
+    margin: 0.5rem 0 0.5rem;
   }
 
   .cardapio__nome {
     font-size: 1.5rem;
     color: var(--bordo);
+    margin-bottom: 0.3rem;
+  }
+
+  .cardapio__tamanho {
+    display: inline-block;
+    background: #f0e0cc;
+    color: rgba(90, 52, 32, 0.75);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.2rem 0.8rem;
+    border-radius: 2rem;
     margin-bottom: 0.8rem;
   }
 
@@ -101,6 +200,151 @@ import { cardapio, site } from '../data/site.js'
     font-size: 0.95rem;
   }
 
+  /* ── Sabores dropdown ── */
+  .cardapio__sabores {
+    margin-bottom: 1.4rem;
+    text-align: left;
+  }
+
+  .cardapio__sabores-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: rgba(90, 52, 32, 0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+    padding-left: 0.2rem;
+  }
+
+  .cardapio__select-wrapper {
+    position: relative;
+  }
+
+  .cardapio__select-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: #fdf5ed;
+    border: 1.5px solid #e8d4be;
+    border-radius: 0.85rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--bordo);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .cardapio__select-trigger:hover {
+    border-color: var(--caramelo);
+    box-shadow: 0 2px 12px rgba(90, 52, 32, 0.08);
+  }
+
+  .cardapio__select-wrapper.aberto .cardapio__select-trigger {
+    border-color: var(--bordo);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    box-shadow: 0 2px 0 rgba(90, 52, 32, 0.06);
+  }
+
+  .cardapio__select-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--caramelo);
+    flex-shrink: 0;
+  }
+
+  .cardapio__select-text {
+    flex: 1;
+  }
+
+  .cardapio__select-arrow {
+    width: 16px;
+    height: 16px;
+    color: rgba(90, 52, 32, 0.4);
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+  }
+
+  .cardapio__select-wrapper.aberto .cardapio__select-arrow {
+    transform: rotate(180deg);
+  }
+
+  /* Dropdown list */
+  .cardapio__select-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1.5px solid var(--bordo);
+    border-top: none;
+    border-bottom-left-radius: 0.85rem;
+    border-bottom-right-radius: 0.85rem;
+    overflow: hidden;
+    z-index: 10;
+    box-shadow: 0 12px 28px rgba(90, 52, 32, 0.13);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .cardapio__select-wrapper.aberto .cardapio__select-dropdown {
+    display: block;
+    animation: slideDown 0.18s ease;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .cardapio__select-option {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: rgba(90, 52, 32, 0.8);
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid #f5ebe0;
+  }
+
+  .cardapio__select-option:last-child {
+    border-bottom: none;
+  }
+
+  .cardapio__select-option:hover {
+    background: #fdf0e4;
+    color: var(--bordo);
+  }
+
+  .cardapio__select-option.selecionado {
+    background: #fff7f0;
+    color: var(--bordo);
+    font-weight: 700;
+  }
+
+  .cardapio__option-check {
+    font-size: 0.78rem;
+    color: var(--caramelo);
+    font-weight: 900;
+    opacity: 0;
+    width: 14px;
+    flex-shrink: 0;
+  }
+
+  .cardapio__select-option.selecionado .cardapio__option-check {
+    opacity: 1;
+  }
+
+  /* ── Preço e botão ── */
   .cardapio__preco {
     display: block;
     color: var(--caramelo);
@@ -115,44 +359,45 @@ import { cardapio, site } from '../data/site.js'
   }
 
   .cardapio__botao {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-top: 0.2rem;
-  background: linear-gradient(135deg, var(--bordo) 0%, #b44b4b 100%);
-  color: white;
-  padding: 0.95rem 1.6rem;
-  border-radius: 999px;
-  font-weight: 800;
-  font-size: 0.96rem;
-  letter-spacing: 0.02em;
-  box-shadow: 0 12px 24px rgba(163, 58, 58, 0.22);
-  transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
-}
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.2rem;
+    background: linear-gradient(135deg, var(--bordo) 0%, #b44b4b 100%);
+    color: white;
+    padding: 0.95rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 0.96rem;
+    letter-spacing: 0.02em;
+    box-shadow: 0 12px 24px rgba(163, 58, 58, 0.22);
+    transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+  }
 
-.cardapio__botao:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 30px rgba(163, 58, 58, 0.28);
-  filter: brightness(1.03);
-}
+  .cardapio__botao:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px rgba(163, 58, 58, 0.28);
+    filter: brightness(1.03);
+  }
 
-.cardapio__botao-icone {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.18);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  transition: transform 0.22s ease, background 0.22s ease;
-}
+  .cardapio__botao-icone {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: transform 0.22s ease, background 0.22s ease;
+  }
 
-.cardapio__botao:hover .cardapio__botao-icone {
-  transform: translateX(3px);
-  background: rgba(255, 255, 255, 0.26);
-}
+  .cardapio__botao:hover .cardapio__botao-icone {
+    transform: translateX(3px);
+    background: rgba(255, 255, 255, 0.26);
+  }
+
   .cardapio__frete {
     margin-top: 2rem;
     text-align: center;
